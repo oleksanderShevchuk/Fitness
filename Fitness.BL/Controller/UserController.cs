@@ -10,7 +10,7 @@ namespace Fitness.BL.Controller
     /// <summary>
     /// Контроллер пользователя. 
     /// </summary>
-    public class UserController
+    public class UserController : ControllerBase
     {
         /// <summary>
         /// Пользователь придложение
