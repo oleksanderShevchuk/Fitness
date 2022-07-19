@@ -12,6 +12,7 @@ namespace Fitness.BL.Controller
     /// </summary>
     public class UserController : ControllerBase
     {
+        private const string USERS_FILE_NANE = "users.dat";
         /// <summary>
         /// Пользователь придложение
         /// </summary>
@@ -46,19 +47,7 @@ namespace Fitness.BL.Controller
         /// <exception cref="FileLoadException"></exception>
         private List<User> GetUsersData()
         {
-            var formatter = new BinaryFormatter();
-
-            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                if (fs.Length > 0 && formatter.Deserialize(fs) is List<User> users)
-                {
-                    return users;
-                }
-                else
-                {
-                    return new List<User>();
-                }
-            }
+            return Load<List<User>> (USERS_FILE_NANE) ?? new List<User>();
         }
         public void SetNewUserData(string genderName, DateTime birthdate, double weight = 1, double height = 1)
         {
@@ -75,12 +64,7 @@ namespace Fitness.BL.Controller
         /// </summary>
         public void Save()
         {
-            var formatter = new BinaryFormatter();
-
-            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fs, Users);
-            }
+            Save(USERS_FILE_NANE, Users);
         }
         
         
